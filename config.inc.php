@@ -17,7 +17,7 @@ $REX['ADDON']['community']['plugin_mediaaccess']['request']['file'] = 'file';
 */
 if ($REX["REDAXO"] && $REX['USER'])
 {
-  //$REX['ADDON']['community']['SUBPAGES'][] = array('plugin.characters','Reenactment-Profile');
+  //$REX['ADDON']['community']['SUBPAGES'][] = array('plugin.media_access','Media Access');
 }
 else
 {
@@ -39,8 +39,9 @@ else
       if($media->checkPerm())
         $media->send();
       else
-        header('Location: '.rex_getUrl($REX['ADDON']['community']['plugin_auth']['article_withoutperm'],'',array($REX['ADDON']['community']['plugin_auth']['request']['ref'] => urlencode($_SERVER['REQUEST_URI']),'&')));
-  
+        header('Location: '.rex_getUrl($REX['ADDON']['community']['plugin_auth']['article_withoutperm'],'',array($REX['ADDON']['community']['plugin_auth']['request']['ref'] => urlencode($_SERVER['REQUEST_URI'])),'&'));
+        //echo rex_getUrl($REX['ADDON']['community']['plugin_auth']['article_withoutperm'],'',array($REX['ADDON']['community']['plugin_auth']['request']['ref'] => urlencode($_SERVER['REQUEST_URI'])) );
+
       exit;
     }
   }

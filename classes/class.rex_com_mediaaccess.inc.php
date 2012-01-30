@@ -60,6 +60,10 @@ class rex_com_mediaaccess
   function checkPerm()
   {
     global $REX;
+    
+    ## if no access rule - grant access
+    if(!$this->MEDIA->getValue('med_com_groups'))
+      return true;
 
     ## true if user is in one or more required groups
     if(isset($REX['COM_USER']))
@@ -69,7 +73,7 @@ class rex_com_mediaaccess
 
       foreach($media_groups as $group)
         if($group != "" && in_array($group,$user_groups))
-          return TRUE;
+          return true;
     }
 
     return false;

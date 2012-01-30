@@ -87,6 +87,3 @@ class rex_com_mediaaccess
     $this->xsendfile = $option;
   }
 }
-
-?>
-

@@ -9,7 +9,10 @@
 /*
  * Options
  */
+
+// Activate this Option if you want use Apache mod_xsendfile to send files to browser
 $REX['ADDON']['community']['plugin_mediaaccess']['xsendfile'] = false;
+
 $REX['ADDON']['community']['plugin_mediaaccess']['request']['file'] = 'file';
 
 /*

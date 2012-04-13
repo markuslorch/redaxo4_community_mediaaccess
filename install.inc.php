@@ -58,8 +58,14 @@ if($install_success)
     $install_field_counter++;
   }
   
-  ## Prio neu sortieren // Metainfo
+  ## resort prior
   rex_organize_priorities($REX['TABLE_PREFIX']. '62_params', 'prior', 'name LIKE "med_%"', 'prior, updatedate', 'field_id');
+
+  ## purge cache
+  $purge_files = glob($REX['INCLUDE_PATH'].'/generated/files/*.media');
+  if(is_array($purge_files) && count($purge_files)>0)
+    foreach ($purge_files as $file)
+      unlink($file);
 }
 
 ## Copy .htacces file

@@ -55,14 +55,19 @@ else
   rex_register_extension('ADDONS_INCLUDED', 'rex_com_mediaaccess_EP');
   
   ## Check perms for Image-Manager
-  function rex_com_mediaaccess_IM_EP($params)
+  function rex_com_mediaaccess_EP_images($params)
   {
     global $REX;
+    
+    if($params['extension_point'] == 'IMAGE_RESIZE_SEND')
+      $file = $params['filename'];
+    else
+      $file = $params['img']['file'];
     
     ## get auth - isn't loaded yet
     require_once $REX["INCLUDE_PATH"]."/addons/community/plugins/auth/inc/auth.php"; 
     
-    $media = rex_com_mediaaccess::getMediaByFilename($params['img']['file']);
+    $media = rex_com_mediaaccess::getMediaByFilename($file);
     if($media->checkPerm())
       return true;
 
@@ -70,6 +75,8 @@ else
   }
   
   ## register extension point for Image Manager
-  rex_register_extension('IMAGE_SEND', 'rex_com_mediaaccess_IM_EP');
+  rex_register_extension('IMAGE_SEND', 'rex_com_mediaaccess_EP_images');
+  ## register extension point for Image Resize
+  rex_register_extension('IMAGE_RESIZE_SEND', 'rex_com_mediaaccess_EP_images');
 }
 ?>

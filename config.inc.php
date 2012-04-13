@@ -53,5 +53,23 @@ else
   
   ## Register extension Point for rex_com_mediaaccess function
   rex_register_extension('ADDONS_INCLUDED', 'rex_com_mediaaccess_EP');
+  
+  ## Check perms for Image-Manager
+  function rex_com_mediaaccess_IM_EP($params)
+  {
+    global $REX;
+    
+    ## get auth - isn't loaded yet
+    require_once $REX["INCLUDE_PATH"]."/addons/community/plugins/auth/inc/auth.php"; 
+    
+    $media = rex_com_mediaaccess::getMediaByFilename($params['img']['file']);
+    if($media->checkPerm())
+      return true;
+
+    return false;
+  }
+  
+  ## register extension point for Image Manager
+  rex_register_extension('IMAGE_SEND', 'rex_com_mediaaccess_IM_EP');
 }
 ?>

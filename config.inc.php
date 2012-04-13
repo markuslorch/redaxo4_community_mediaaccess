@@ -10,9 +10,7 @@
  * Options
  */
 
-// Activate this Option if you want use Apache mod_xsendfile to send files to browser
-$REX['ADDON']['community']['plugin_mediaaccess']['xsendfile'] = false;
-
+$REX['ADDON']['community']['plugin_mediaaccess']['xsendfile'] = false; // Activate this Option if you want use Apache mod_xsendfile to send files to browser
 $REX['ADDON']['community']['plugin_mediaaccess']['request']['file'] = 'file';
 
 /*
@@ -20,6 +18,10 @@ $REX['ADDON']['community']['plugin_mediaaccess']['request']['file'] = 'file';
 */
 if ($REX["REDAXO"] && $REX['USER'])
 {
+  ## Include lang files
+  if(isset($I18N) && is_object($I18N))
+  $I18N->appendFile($REX['INCLUDE_PATH'].'/addons/community/plugins/mediaaccess/lang');
+
   //$REX['ADDON']['community']['SUBPAGES'][] = array('plugin.media_access','Media Access');
 }
 else

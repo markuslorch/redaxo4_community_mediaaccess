@@ -10,8 +10,12 @@
  * Options
  */
 
+$REX['ADDON']['community']['plugin_mediaaccess']['unsafe_fileext'] = 'jpg,jpeg,gif,png,ico,js,css,swf'; //seperate with coma, without dot
 $REX['ADDON']['community']['plugin_mediaaccess']['xsendfile'] = false; // Activate this Option if you want use Apache mod_xsendfile to send files to browser
 $REX['ADDON']['community']['plugin_mediaaccess']['request']['file'] = 'file';
+
+// --- DON'T CHANGE THE FOLLOWING LINES ---
+$REX['ADDON']['community']['plugin_mediaaccess']['unsafe_fileext'] = explode(',',$REX['ADDON']['community']['plugin_mediaaccess']['unsafe_fileext']);
 
 /*
 * Loading Plugin
@@ -74,9 +78,12 @@ else
     return false;
   }
   
-  ## register extension point for Image Manager
-  rex_register_extension('IMAGE_SEND', 'rex_com_mediaaccess_EP_images');
-  ## register extension point for Image Resize
-  rex_register_extension('IMAGE_RESIZE_SEND', 'rex_com_mediaaccess_EP_images');
+  ## register extension points if needed
+  $image_fileext = array('jpeg', 'jpg', 'gif', 'png');
+  if(count(array_intersect($image_fileext, $REX['ADDON']['community']['plugin_mediaaccess']['unsafe_fileext'])) < count($image_fileext))
+  {
+    rex_register_extension('IMAGE_SEND', 'rex_com_mediaaccess_EP_images'); //Image-Manager & Image-Manager EP
+    rex_register_extension('IMAGE_RESIZE_SEND', 'rex_com_mediaaccess_EP_images'); //Image-Resize
+  }
 }
 ?>

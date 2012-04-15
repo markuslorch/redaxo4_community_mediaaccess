@@ -1,0 +1,9 @@
+h1. MediaAccess Plugin for REDAXO Community AddOn 2.8.x
+
+Dieses Repository als ZIP Archiv herunterladen, entpacken und den Ordner in "mediaaccess" umbennenen. Anschließden in /redax/include/addons/community/plugins/ hochladen und über das REDAXO Backend (AddOns) installieren.
+
+Download a ZIP archive of this repository, extrude it and rename the folder to "mediaaccess". Then upload it to /redaxo/include/addons/community/plugins. Install it on the REDAXO backend site addons.
+
+h2. Help:
+https://github.com/markuslorch/redaxo4_community_mediaaccess/wiki
+

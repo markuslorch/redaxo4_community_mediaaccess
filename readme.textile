@@ -4,6 +4,7 @@ Dieses Repository als ZIP Archiv herunterladen, entpacken und den Ordner in "med
 
 Download a ZIP archive of this repository, extrude it and rename the folder to "mediaaccess". Then upload it to /redaxo/include/addons/community/plugins. Install it on the REDAXO backend site addons.
 
-h2. Help:
+h2. Please read the manual :-)
+
 https://github.com/markuslorch/redaxo4_community_mediaaccess/wiki
 

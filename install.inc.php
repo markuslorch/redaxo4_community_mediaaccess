@@ -73,6 +73,9 @@ if($install_success)
 {
   require_once $REX['INCLUDE_PATH'].'/addons/community/plugins/mediaaccess/functions/function.utils.inc.php';
   $install_success = rex_com_mediaccess_copyfile('.htaccess', $install_source_path, $REX['HTDOCS_PATH'].'files/');
+
+  // and update :-)
+  // rex_com_mediaaccess_htaccess_update();
 }
 
 ## finish
@@ -80,5 +83,3 @@ if(!$install_success)
   $REX['ADDON']['installmsg']['mediaaccess'] = "Bei der Installation sind Fehler aufgetreten";
 else
   $REX['ADDON']['install']['mediaaccess'] = true;
-
-?>

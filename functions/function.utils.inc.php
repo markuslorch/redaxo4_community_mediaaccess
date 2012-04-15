@@ -1,5 +1,44 @@
 <?php
 
+/**
+ * Updates /files/.htaccess file according to user config
+ * @return boolean
+ */
+function rex_com_mediaaccess_htaccess_update()
+{
+  global $REX;
+  
+  $unsecure_fileext = implode('|',explode(',',$REX['ADDON']['community']['plugin_mediaaccess']['unsecure_fileext']));
+  $get_varname = $REX['ADDON']['community']['plugin_mediaaccess']['request']['file'];
+  
+  ## build new content
+  $new_content = '### MEDIAACCESS'.PHP_EOL;
+  $new_content .= 'RewriteCond %{REQUEST_URI} !files/.*/.*'.PHP_EOL;
+  $new_content .= 'RewriteCond %{REQUEST_URI} !files/(.*).('.$unsecure_fileext.')$'.PHP_EOL;
+  $new_content .= 'RewriteRule ^(.*)$ http://%{HTTP_HOST}/?'.$get_varname.'=\$1 [R=301,L]'.PHP_EOL;
+  $new_content .= '### /MEDIAACCESS'.PHP_EOL;
+  
+  ## write to htaccess
+  $path = $REX['HTDOCS_PATH'].'files/.htaccess';
+  $old_content = rex_get_file_contents($path);
+  
+  if(preg_match("@(### MEDIAACCESS.*### /MEDIAACCESS)@s",$old_content) == 1)
+  {  
+    $new_content = preg_replace("@(### MEDIAACCESS.*### /MEDIAACCESS)@s", $new_content, $old_content);
+    return rex_put_file_contents($path, $new_content);
+  }
+  
+  return false;
+}
+
+/**
+ * Copy File from source to target
+ * returns true on success
+ * @param string $file
+ * @param string $source
+ * @param string $target
+ * @return boolean
+ */
 function rex_com_mediaccess_copyfile($file, $source, $target)
 {
   global $REX;

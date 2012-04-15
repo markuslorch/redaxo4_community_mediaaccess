@@ -2,7 +2,7 @@ RewriteEngine On
 RewriteBase /
 
 ### DO NOT REMOVE THE FOLLOWING "MEDIACCESS" DELIMITERS!
-### MEDIACCESS
-RewriteCond %{REQUEST_URI} !files/(.*).(jpg|jpeg|png|gif|ico|css|js|swf)$
-RewriteRule ^(.*)$ http://%{HTTP_HOST}/?file=$1 [R=301,L]
+### MEDIAACCESS
+RewriteCond %{REQUEST_URI} !files/.*/.*
+RewriteCond %{REQUEST_URI} !files/(.*).(jpeg|jpg|png|gif|ico|css|js|swf)$
 ### /MEDIAACCESS

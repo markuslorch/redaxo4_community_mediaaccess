@@ -62,12 +62,16 @@ class rex_com_mediaaccess
     global $REX;
     
     ## if no access rule - grant access
-    if($this->MEDIA->getValue('med_com_groups') == '' || $this->MEDIA->getValue('med_com_groups') == '||')
-      return true;
+    if($this->MEDIA->getValue('med_com_mediaaccess_comusers') == '' || $this->MEDIA->getValue('med_com_mediaaccess_comusers') == '||')
+      if($this->MEDIA->getValue('med_com_groups') == '' || $this->MEDIA->getValue('med_com_groups') == '||')
+        return true;
 
     ## true if user is in one or more required groups
     if(isset($REX['COM_USER']))
     {
+      if($this->MEDIA->getValue('med_com_mediaaccess_comusers') != '' && $this->MEDIA->getValue('med_com_mediaaccess_comusers') != '||')
+        return true;
+      
       $media_groups = explode("|",$this->MEDIA->getValue('med_com_groups'));
       $user_groups = explode(",",$REX["COM_USER"]->getValue("rex_com_group"));
 

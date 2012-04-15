@@ -23,7 +23,8 @@ if(!$ADDONSsic['plugins']['community']['status']['group'])
 if($install_success)
 {
   $install_field = array();
-  $install_field[] = array('title'=>'translate:com_mediaaccess_legend','name'=>'med_com_mediaccess_legend','type'=>'12');
+  $install_field[] = array('title'=>'translate:com_mediaaccess_legend','name'=>'med_com_mediaaccess_legend','type'=>'12');
+  $install_field[] = array('title'=>'translate:com_mediaaccess_comusers','name'=>'med_com_mediaaccess_comusers','type'=>'5','params'=>'1');
   $install_field[] = array('title'=>'translate:com_mediaaccess_legend_groupname','name'=>'med_com_groups','type'=>'3','attributes'=>'multiple=multiple', 'params'=>'select name as label,id from '.$REX['TABLE_PREFIX'].'com_group order by label');
   
   $install_field_counter = 100;

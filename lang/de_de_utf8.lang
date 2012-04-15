@@ -10,5 +10,6 @@ com_mediaaccess_settings_update = Einstellungen wurden erfolgreich aktuallisiert
 com_mediaaccess_htaccess_failupdate = Die .htaccess (/files/.htaccess) konnte nicht aktuallisiert werden. Prüfen Sie ob diese vorhanden und beschreibar ist
 com_mediaaccess_settings_failupdate = Einstellungen konnten nicht aktuallisert werden. Prüfen sie die Schreibrechte der config.inc.php
 
-com_mediaaccess_legend = Dateisicherheit (ungeschützt, wenn keine Gruppen ausgewählt)
+com_mediaaccess_legend = Dateisicherheit (ungeschützt, wenn nichts ausgewählt)
 com_mediaaccess_legend_groupname = Erlaubte Gruppen
+com_mediaaccess_comusers = Alle eingeloggten User

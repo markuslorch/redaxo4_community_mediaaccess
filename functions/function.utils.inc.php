@@ -15,7 +15,8 @@ function rex_com_mediaaccess_htaccess_update()
   $new_content = '### MEDIAACCESS'.PHP_EOL;
   $new_content .= 'RewriteCond %{REQUEST_URI} !files/.*/.*'.PHP_EOL;
   $new_content .= 'RewriteCond %{REQUEST_URI} !files/(.*).('.$unsecure_fileext.')$'.PHP_EOL;
-  $new_content .= 'RewriteRule ^(.*)$ http://%{HTTP_HOST}/?'.$get_varname.'=\$1 [R=301,L]'.PHP_EOL;
+  $new_content .= 'RewriteRule ^(.*):SSL$ https://%{HTTP_HOST}/?'.$get_varname.'=\$1 [R=301,L]'.PHP_EOL;
+  $new_content .= 'RewriteRule ^(.*):NOSSL$ http://%{HTTP_HOST}/?'.$get_varname.'=\$1 [R=301,L]'.PHP_EOL;
   $new_content .= '### /MEDIAACCESS'.PHP_EOL;
   
   ## write to htaccess

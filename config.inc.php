@@ -14,7 +14,7 @@
 
 // --- DYN
 $REX['ADDON']['community']['plugin_mediaaccess']['xsendfile'] = 0;
-$REX['ADDON']['community']['plugin_mediaaccess']['unsecure_fileext'] = "jpeg,jpg,png,gif,ico,css,js,swf";
+$REX['ADDON']['community']['plugin_mediaaccess']['unsecure_fileext'] = "jpg,jpeg,png,gif,ico,css,js,swf";
 // --- /DYN
 
 ## hidden option :)
@@ -26,7 +26,7 @@ $REX['ADDON']['community']['plugin_mediaaccess']['request']['file'] = 'file';
 /*
 * Loading Plugin
 */
-if ($REX["REDAXO"] && $REX['USER'])
+if($REX["REDAXO"] && $REX['USER'])
 {
   ## Include lang files
   if(isset($I18N) && is_object($I18N))
@@ -44,13 +44,17 @@ else
   include $REX["INCLUDE_PATH"]."/addons/community/plugins/mediaaccess/classes/class.rex_com_mediaaccess.inc.php";
   include $REX['INCLUDE_PATH'].'/addons/community/plugins/mediaaccess/functions/function.extensions.inc.php';
   
+  ## starts session if required
+  if(session_id() == '')
+    session_start();
+  
   ## Register extension Point for rex_com_mediaaccess function
   rex_register_extension('ADDONS_INCLUDED', 'rex_com_mediaaccess_EP');
 
   ## register extension points if needed
   $unsecure_fileext = explode(',',$REX['ADDON']['community']['plugin_mediaaccess']['unsecure_fileext']);
   $image_fileext = array('jpeg', 'jpg', 'gif', 'png');
-  if(count(array_intersect($image_fileext, $unsecure_fileext)) < count($image_fileext))
+  if(count(array_intersect($image_fileext, $unsecure_fileext)) < count($image_fileext) && $_SESSION[$REX['INSTNAME']]['UID'] > 0)
   {
     rex_register_extension('IMAGE_SEND', 'rex_com_mediaaccess_EP_images'); //Image-Manager & Image-Manager EP
     rex_register_extension('IMAGE_RESIZE_SEND', 'rex_com_mediaaccess_EP_images'); //Image-Resize

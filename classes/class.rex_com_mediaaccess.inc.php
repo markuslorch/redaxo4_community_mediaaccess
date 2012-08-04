@@ -79,7 +79,7 @@ class rex_com_mediaaccess
         if($group != "" && in_array($group,$user_groups))
           return true;
     }
-
+    
     return false;
   }
 

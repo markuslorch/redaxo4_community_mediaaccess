@@ -3,7 +3,12 @@ RewriteBase /
 
 ### DO NOT REMOVE THE FOLLOWING "MEDIACCESS" DELIMITERS!
 ### MEDIAACCESS
+RewriteCond %{HTTPS} off
 RewriteCond %{REQUEST_URI} !files/.*/.*
 RewriteCond %{REQUEST_URI} !files/(.*).(jpeg|jpg|png|gif|ico|css|js|swf)$
 RewriteRule ^(.*)$ http://%{HTTP_HOST}/?file=$1 [R=301,L]
+RewriteCond %{HTTPS} on
+RewriteCond %{REQUEST_URI} !files/.*/.*
+RewriteCond %{REQUEST_URI} !files/(.*).(jpeg|jpg|png|gif|ico|css|js|swf)$
+RewriteRule ^(.*)$ https://%{HTTP_HOST}/?file=$1 [R=301,L]
 ### /MEDIAACCESS

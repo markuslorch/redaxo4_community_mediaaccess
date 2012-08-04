@@ -34,16 +34,35 @@ function rex_com_mediaaccess_EP_images($params)
   global $REX;
 
   if($params['extension_point'] == 'IMAGE_RESIZE_SEND')
-  $file = $params['filename'];
+    $file = $params['filename'];
   else
-  $file = $params['img']['file'];
+    $file = $params['img']['file'];
 
   ## get auth - isn't loaded yet
   require_once $REX["INCLUDE_PATH"]."/addons/community/plugins/auth/inc/auth.php";
     
   $media = rex_com_mediaaccess::getMediaByFilename($file);
   if($media->checkPerm())
-  return true;
+    return true;
 
   return false;
+}
+
+/**
+ * Hack for Use with Image_Manager AddOn
+ */
+function rex_com_mediaaccess_ImageManager_checkPerm($filename, $ADDONSsic)
+{
+  global $REX;
+  
+  if($filename)
+  {
+    ## get auth - isn't loaded yet
+    $REX['ADDON']['community']['plugin_auth'] = $ADDONSsic['community']['plugin_auth'];
+    require_once $REX["INCLUDE_PATH"]."/addons/community/plugins/auth/inc/auth.php";
+  
+    $media = rex_com_mediaaccess::getMediaByFilename($filename);
+    if(!$media->checkPerm())
+      exit;
+  }
 }

@@ -54,7 +54,7 @@ else
   ## register extension points if needed
   $unsecure_fileext = explode(',',$REX['ADDON']['community']['plugin_mediaaccess']['unsecure_fileext']);
   $image_fileext = array('jpeg', 'jpg', 'gif', 'png');
-  if(count(array_intersect($image_fileext, $unsecure_fileext)) < count($image_fileext) && isset($_SESSION[$REX['INSTNAME']]['UID']))
+  if(count(array_intersect($image_fileext, $unsecure_fileext)) < count($image_fileext) && !isset($_SESSION[$REX['INSTNAME']]['UID']))
   {
     rex_register_extension('IMAGE_SEND', 'rex_com_mediaaccess_EP_images'); //Image-Manager & Image-Manager EP
     rex_register_extension('IMAGE_RESIZE_SEND', 'rex_com_mediaaccess_EP_images'); //Image-Resize

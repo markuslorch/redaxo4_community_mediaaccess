@@ -5,6 +5,5 @@ RewriteBase /
 ### MEDIAACCESS
 RewriteCond %{REQUEST_URI} !files/.*/.*
 RewriteCond %{REQUEST_URI} !files/(.*).(jpeg|jpg|png|gif|ico|css|js|swf)$
-RewriteRule ^(.*):SSL$ https://%{HTTP_HOST}/?file=$1 [R=301,L]
-RewriteRule ^(.*):NOSSL$ http://%{HTTP_HOST}/?file=$1 [R=301,L]
+RewriteRule ^(.*)$ http://%{HTTP_HOST}/?file=$1 [R=301,L]
 ### /MEDIAACCESS

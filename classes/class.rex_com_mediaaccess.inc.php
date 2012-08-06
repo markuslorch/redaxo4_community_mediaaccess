@@ -7,21 +7,15 @@
 
 class rex_com_mediaaccess
 {
-  var $filename;
-  var $filepath;
-  var $fullpath;
-  var $xsendfile = false;
   var $MEDIA;
+  var $extension_sendfile;
 
   function rex_com_mediaaccess($oomedia)
   {
     global $REX;
-
+        
     $this->MEDIA = $oomedia;
-
-    $this->filepath = $REX['MEDIAFOLDER'];
-    $this->filename = $this->MEDIA->getFileName();
-    $this->fullpath = $this->filepath.'/'.$this->filename;
+    $this->setExtensionSendfile($REX['ADDON']['community']['plugin_mediaaccess']['extension_sendfile']);
   }
 
   function getMediaByFilename($filename)
@@ -30,29 +24,29 @@ class rex_com_mediaaccess
 
     return new rex_com_mediaaccess($oomedia);
   }
+  
+  function setExtensionSendfile($classname)
+  {
+    $this->extension_sendfile = $classname;
+  }
+  
+  function getExtensionSendfile()
+  {
+    global $REX;
+    
+    foreach($REX['ADDON']['community']['plugin_mediaaccess']['extension_sendfile_dir'] as $path)
+      if(@include_once($path.'class.'.$this->extension_sendfile.'.inc.php'))
+        return new $this->extension_sendfile($this->MEDIA);
+  }
 
   function send()
   {
-    if($this->xsendfile)
-    {
-      header('Content-type: application/octet-stream');
-      header('Content-disposition: attachment; filename="'.$this->filename.'"');
-      header('X-SendFile: '.$this->fullpath);
-    }
-    else
-    {
-      header("Pragma: public");
-      header("Expires: 0");
-      header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-      header("Content-Type: application/force-download");
-      header("Content-Type: application/octet-stream");
-      header("Content-Type: application/download");
-      header("Content-Transfer-Encoding: binary");
-      header("Content-Length: ".$this->MEDIA->getSize());
-      header("Content-Disposition: attachment; filename=".$this->filename.";");
-      
-      @readfile($this->fullpath);
-    }
+    global $REX;
+    
+    require_once $REX["INCLUDE_PATH"].'/addons/community/plugins/mediaaccess/classes/extensions_sendfile/class.'.$this->extension_sendfile.'.inc.php';
+    
+    $sendclass = $this->getExtensionSendfile();
+    $sendclass->send();
     
     exit;
   }
@@ -81,14 +75,6 @@ class rex_com_mediaaccess
     }
     
     return false;
-  }
-
-  /*
-  * Use this option if mod_xsenfile on Apache is available
-  */
-  function setXsendfile($option = true)
-  {
-    $this->xsendfile = $option;
   }
   
 }

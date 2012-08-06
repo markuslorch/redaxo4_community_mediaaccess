@@ -12,7 +12,6 @@ function rex_com_mediaaccess_EP()
   if($file)
   {
     $media = rex_com_mediaaccess::getMediaByFilename($file);
-    $media->setXsendfile($REX['ADDON']['community']['plugin_mediaaccess']['xsendfile']);
 
     if($media->checkPerm())
       $media->send();

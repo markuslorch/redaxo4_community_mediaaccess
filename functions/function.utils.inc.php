@@ -1,6 +1,42 @@
 <?php
 
 /**
+ * Returns an Array with the Names of registered Sendfile Extensions Classes
+ * @return array 
+ */
+function rex_com_mediaaccess_getExtensionsSendfile()
+{
+  global $REX;
+
+  $classes = array();
+
+  foreach($REX['ADDON']['community']['plugin_mediaaccess']['extension_sendfile_dir'] as $path)
+  {
+    if($dir = opendir($path))
+    {
+      while($file = readdir($dir))
+      {
+        if(!is_dir($file))
+        {
+          $classname = explode(".", $file);
+          $class = $classname[1];
+
+          if(file_exists($path.$file))
+          {
+            include_once($path.$file);
+            $classes[] = $class;
+          }
+        }
+      }
+      closedir($dir);
+    }
+  }
+
+  return $classes;
+}
+
+
+/**
  * Updates /files/.htaccess file according to user config
  * @return boolean
  */

@@ -9,16 +9,12 @@ $xsendfile_checked = '';
 if(rex_request("func","string")=="update")
 {
   ## get request parameters
-  if(rex_request("xsendfile","boolean"))
-    $REX['ADDON']['community']['plugin_mediaaccess']['xsendfile'] = 1;
-  else
-    $REX['ADDON']['community']['plugin_mediaaccess']['xsendfile'] = 0;
-    
   $REX['ADDON']['community']['plugin_mediaaccess']['unsecure_fileext'] = rex_request("unsecure_fileext","string");
+  $REX['ADDON']['community']['plugin_mediaaccess']['extension_sendfile'] = rex_request("extension_sendfile","string");
 
   ## build new config content
   $content = '
-$REX[\'ADDON\'][\'community\'][\'plugin_mediaaccess\'][\'xsendfile\'] = '.$REX['ADDON']['community']['plugin_mediaaccess']['xsendfile'].';
+$REX[\'ADDON\'][\'community\'][\'plugin_mediaaccess\'][\'extension_sendfile\'] = "'.$REX['ADDON']['community']['plugin_mediaaccess']['extension_sendfile'].'";
 $REX[\'ADDON\'][\'community\'][\'plugin_mediaaccess\'][\'unsecure_fileext\'] = "'.$REX['ADDON']['community']['plugin_mediaaccess']['unsecure_fileext'].'";
 ';
 
@@ -35,8 +31,38 @@ $REX[\'ADDON\'][\'community\'][\'plugin_mediaaccess\'][\'unsecure_fileext\'] = "
 /*
  * Formular output
  */
-if($REX['ADDON']['community']['plugin_mediaaccess']['xsendfile'])
-  $xsendfile_checked = 'checked="checked"';
+
+## building Drop-Down
+function dropdown_sendfile()
+{
+  global $REX;
+  $out = '<select class="rex-form-select" name="extension_sendfile">';
+  
+  foreach(rex_com_mediaaccess_getExtensionsSendfile() as $class)
+  {
+    $selected = '';
+    
+    if($REX['ADDON']['community']['plugin_mediaaccess']['extension_sendfile'] == $class)
+      $selected = 'selected="selected"';
+    
+    $out .= '<option value="'.$class.'" '.$selected.'>'.$class::getName().'</option>';
+  }
+  $out .= '</select>';
+  
+  return $out;
+}
+
+## building Sendfile Descriptions
+function describe_sendfile()
+{
+  global $REX;
+  $out = '';
+  
+  foreach(rex_com_mediaaccess_getExtensionsSendfile() as $class)
+     $out .= '<p><strong>'.$class::getName().'</strong><br/>'.$class::getDescription().'</p>';
+  
+  return $out;
+}
 
 echo '
 	<div class="rex-form" id="rex-form-system-setup">
@@ -54,8 +80,9 @@ echo '
 <p class="rex-tx1">'.$I18N->msg("com_mediaaccess_settings_description").'</p>
 <h3 class="rex-hl3">'.$I18N->msg("com_mediaaccess_settings_unsecure_fileext").'</h3>
 <p class="rex-tx1">'.$I18N->msg("com_mediaaccess_help_unsecure_fileext").'</p>
-<h3 class="rex-hl3">'.$I18N->msg("com_mediaaccess_settings_xsendfile").'</h3>
-<p class="rex-tx1">'.$I18N->msg("com_mediaaccess_help_xsendfile").'</p>
+<h3 class="rex-hl3">'.$I18N->msg("com_mediaaccess_settings_sendfile").'</h3>
+<p class="rex-tx1">'.$I18N->msg("com_mediaaccess_help_sendfile").'</p>
+'.describe_sendfile().'
 					</div>
 				</div>
 			
@@ -78,8 +105,8 @@ echo '
 								</div>
 								<div class="rex-form-row">
 									<p class="rex-form-col-a rex-form-checkbox">
-										<label for="rex-form-appSecret">'.$I18N->msg("com_mediaaccess_settings_xsendfile").'</label>
-										<input class="rex-form-checkbox" type="checkbox" id="rex-form-xsendfile" name="xsendfile" value="true" '.$xsendfile_checked.' />
+										<label for="rex-form-appSecret">'.$I18N->msg("com_mediaaccess_settings_sendfile").'</label>
+										'.dropdown_sendfile().'
 									</p>
 								</div>
 

@@ -3,12 +3,12 @@
 * Plugin Media-Access
 * @author m.lorch[at]it-kult[dot]de Markus Lorch
 * @author <a href="http://www.it-kult.de">www.it-kult.de</a>
-* @version 1.1
+* @version 1.5
 * 
 * Some parts are inspired from rexseo - thx jeandeluxe ;)
 */
 
-$REX['ADDON']['version']['mediaaccess'] = '1.1';
+$REX['ADDON']['version']['mediaaccess'] = '1.5';
 $REX['ADDON']['author']['mediaaccess'] = 'Markus Lorch';
 $REX['ADDON']['supportpage']['mediaaccess'] = 'www.it-kult.de';
 
@@ -17,19 +17,24 @@ $REX['ADDON']['supportpage']['mediaaccess'] = 'www.it-kult.de';
  */
 
 // --- DYN
-$REX['ADDON']['community']['plugin_mediaaccess']['xsendfile'] = 0;
+$REX['ADDON']['community']['plugin_mediaaccess']['extension_sendfile'] = "rex_com_mediaaccess_sendfile_readfile";
 $REX['ADDON']['community']['plugin_mediaaccess']['unsecure_fileext'] = "jpeg,jpg,png,gif,ico,css,js,swf";
 // --- /DYN
 
-## hidden option :)
+## hidden options :)
+$REX['ADDON']['community']['plugin_mediaaccess']['extension_sendfile_dir'] = array($REX["INCLUDE_PATH"].'/addons/community/plugins/mediaaccess/classes/extensions_sendfile/');
 $REX['ADDON']['community']['plugin_mediaaccess']['request']['file'] = 'file';
 
 // --- END OF CONFIG ---
 // --- DON'T CHANGE ANYTHING BELOW THIS LINE ---
 
+
 /*
 * Loading Plugin
 */
+## include abstract class for sendfile extensions
+include $REX["INCLUDE_PATH"]."/addons/community/plugins/mediaaccess/classes/class.rex_com_mediaaccess_sendfile.inc.php";
+
 if($REX["REDAXO"] && $REX['USER'])
 {
   ## Include lang files

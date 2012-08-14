@@ -16,14 +16,27 @@ class rex_com_mediaaccess_sendfile_xsendfile extends rex_com_mediaaccess_sendfil
     $this->filepath = $REX['MEDIAFOLDER'];
     $this->filename = $this->MEDIA->getFileName();
     $this->fullpath = $this->filepath.'/'.$this->filename;
+    $this->fileext = strtolower($this->MEDIA->getExtension());
   }
 
   function send()
   {
     global $REX;
 
-    header('Content-type: application/octet-stream');
-    header('Content-disposition: attachment; filename="'.$this->filename.'"');
+    if(in_array($this->fileext,array('jpeg', 'jpg', 'png','gif')))
+    {
+      if($this->fileext == 'jpg')
+        $this->fileext = 'jpeg';
+    
+      header('Content-Disposition: inline; filename="'.$this->filename.'"');
+      header('Content-Type: image/'.$this->fileext);
+    }
+    else
+    {
+      header('Content-type: application/octet-stream');
+      header('Content-disposition: attachment; filename="'.$this->filename.'"');
+    }   
+    
     header('X-SendFile: '.$this->fullpath);
   }
 

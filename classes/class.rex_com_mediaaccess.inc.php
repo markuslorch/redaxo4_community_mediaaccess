@@ -45,6 +45,9 @@ class rex_com_mediaaccess
     
     require_once $REX["INCLUDE_PATH"].'/addons/community/plugins/mediaaccess/classes/extensions_sendfile/class.'.$this->extension_sendfile.'.inc.php';
     
+    while(ob_get_level())
+      ob_end_clean();
+    
     $sendclass = $this->getExtensionSendfile();
     $sendclass->send();
     

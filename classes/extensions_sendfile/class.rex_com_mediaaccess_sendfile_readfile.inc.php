@@ -21,9 +21,6 @@ class rex_com_mediaaccess_sendfile_readfile extends rex_com_mediaaccess_sendfile
 
   function send()
   {
-    while(ob_get_level())
-      ob_end_clean();
-    
     if(in_array($this->fileext,array('jpeg', 'jpg', 'png','gif')))
     {
       if($this->fileext == 'jpg')

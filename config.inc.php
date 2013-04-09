@@ -58,7 +58,10 @@ else
     session_start();
   
   ## Register extension Point for rex_com_mediaaccess function
-  rex_register_extension('ADDONS_INCLUDED', 'rex_com_mediaaccess_EP');
+  if(isset($ADDONSsic['status']['rexseo']) && $ADDONSsic['status']['rexseo'])
+    rex_register_extension('REXSEO_INCLUDED', 'rex_com_mediaaccess_EP');
+  else
+    rex_register_extension('ADDONS_INCLUDED', 'rex_com_mediaaccess_EP');
 
   ## register extension points if needed
   $unsecure_fileext = explode(',',$REX['ADDON']['community']['plugin_mediaaccess']['unsecure_fileext']);
